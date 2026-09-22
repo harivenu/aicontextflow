@@ -1,0 +1,6 @@
+{
+  "require": ["./test/setup.js", "ts-node/register"],
+  "extension": ["ts"],
+  "spec": "test/suite/**/*.test.ts",
+  "node-option": ["no-warnings"]
+}

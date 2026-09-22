@@ -1,0 +1,218 @@
+{
+  "name": "aicontextflow",
+  "displayName": "AIContextFlow",
+  "description": "Unified management and validation tool for project AI context files (.context/, AGENTS.md, CLAUDE.md, Copilot).",
+  "version": "1.0.0",
+  "publisher": "aicontextflow",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aicontextflow/aicontextflow"
+  },
+  "bugs": {
+    "url": "https://github.com/aicontextflow/aicontextflow/issues"
+  },
+  "homepage": "https://github.com/aicontextflow/aicontextflow#readme",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other",
+    "Programming Languages",
+    "Snippets"
+  ],
+  "keywords": [
+    "ai",
+    "context",
+    "agents",
+    "claude",
+    "copilot",
+    "prompt-engineering",
+    "cursor",
+    "context-window"
+  ],
+  "icon": "media/logo.png",
+  "main": "./dist/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "bundle": "node esbuild.js",
+    "bundle:watch": "node esbuild.js --watch",
+    "package": "node esbuild.js --production",
+    "test": "mocha",
+    "test:unit": "mocha"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "aicontextflow-sidebar",
+          "title": "AIContextFlow",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "aicontextflow-sidebar": [
+        {
+          "id": "aicontextflow.explorer",
+          "name": "AI Context Explorer"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "aicontextflow.initStructure",
+        "title": "Initialize Context Structure",
+        "category": "AIContextFlow",
+        "icon": "$(folder-active)"
+      },
+      {
+        "command": "aicontextflow.createFeature",
+        "title": "Create Feature Sub-Context",
+        "category": "AIContextFlow",
+        "icon": "$(add)"
+      },
+      {
+        "command": "aicontextflow.setActiveFeature",
+        "title": "Set Active Feature Sub-Context",
+        "category": "AIContextFlow",
+        "icon": "$(check)"
+      },
+      {
+        "command": "aicontextflow.unsetActiveFeature",
+        "title": "Clear Active Sub-Context",
+        "category": "AIContextFlow",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "aicontextflow.exportBundle",
+        "title": "Export Bundled AI Context to Clipboard",
+        "category": "AIContextFlow",
+        "icon": "$(clippy)"
+      },
+      {
+        "command": "aicontextflow.previewBundle",
+        "title": "Preview Bundled AI Context",
+        "category": "AIContextFlow",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "aicontextflow.validateStructure",
+        "title": "Validate AI Context & Symlinks",
+        "category": "AIContextFlow",
+        "icon": "$(pass)"
+      },
+      {
+        "command": "aicontextflow.refreshExplorer",
+        "title": "Refresh Explorer",
+        "category": "AIContextFlow",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "aicontextflow.openFile",
+        "title": "Open File",
+        "category": "AIContextFlow"
+      },
+      {
+        "command": "aicontextflow.deleteFeature",
+        "title": "Delete Feature Sub-Context",
+        "category": "AIContextFlow",
+        "icon": "$(trash)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "aicontextflow.refreshExplorer",
+          "when": "view == aicontextflow.explorer",
+          "group": "navigation@1"
+        },
+        {
+          "command": "aicontextflow.createFeature",
+          "when": "view == aicontextflow.explorer",
+          "group": "navigation@2"
+        },
+        {
+          "command": "aicontextflow.exportBundle",
+          "when": "view == aicontextflow.explorer",
+          "group": "navigation@3"
+        },
+        {
+          "command": "aicontextflow.validateStructure",
+          "when": "view == aicontextflow.explorer",
+          "group": "navigation@4"
+        },
+        {
+          "command": "aicontextflow.initStructure",
+          "when": "view == aicontextflow.explorer",
+          "group": "navigation@5"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "aicontextflow.setActiveFeature",
+          "when": "view == aicontextflow.explorer && viewItem == featureItemInactive",
+          "group": "inline@1"
+        },
+        {
+          "command": "aicontextflow.unsetActiveFeature",
+          "when": "view == aicontextflow.explorer && viewItem == featureItemActive",
+          "group": "inline@1"
+        },
+        {
+          "command": "aicontextflow.exportBundle",
+          "when": "view == aicontextflow.explorer && (viewItem == featureItemActive || viewItem == featureItemInactive)",
+          "group": "2_bundle"
+        },
+        {
+          "command": "aicontextflow.deleteFeature",
+          "when": "view == aicontextflow.explorer && (viewItem == featureItemActive || viewItem == featureItemInactive)",
+          "group": "3_danger"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "AIContextFlow",
+      "properties": {
+        "aicontextflow.contextDirectory": {
+          "type": "string",
+          "default": ".context",
+          "description": "Relative directory where AI context files and features reside."
+        },
+        "aicontextflow.agentsFilePath": {
+          "type": "string",
+          "default": "AGENTS.md",
+          "description": "Relative path to the root agents instruction file (AGENTS.md)."
+        },
+        "aicontextflow.stripFluffOnExport": {
+          "type": "boolean",
+          "default": true,
+          "description": "Strip markdown comments, excessive whitespace, and placeholder markers when exporting the context bundle."
+        },
+        "aicontextflow.embedFullContentInAgentsMd": {
+          "type": "boolean",
+          "default": false,
+          "description": "When updating AGENTS.md with the active feature, embed the complete feature markdown content instead of just the summary/reference link."
+        },
+        "aicontextflow.showStatusBarItem": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the active AI context sub-feature in the status bar."
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.7",
+    "@types/node": "^20.14.9",
+    "@types/vscode": "^1.90.0",
+    "esbuild": "^0.23.0",
+    "mocha": "^10.7.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3"
+  }
+}
