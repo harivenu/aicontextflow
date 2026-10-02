@@ -6,12 +6,12 @@
   "publisher": "aicontextflow",
   "repository": {
     "type": "git",
-    "url": "https://github.com/aicontextflow/aicontextflow"
+    "url": "https://github.com/harivenu/aicontextflow"
   },
   "bugs": {
-    "url": "https://github.com/aicontextflow/aicontextflow/issues"
+    "url": "https://github.com/harivenu/aicontextflow/issues"
   },
-  "homepage": "https://github.com/aicontextflow/aicontextflow#readme",
+  "homepage": "https://github.com/harivenu/aicontextflow#readme",
   "engines": {
     "vscode": "^1.90.0"
   },
@@ -39,6 +39,7 @@
     "bundle": "node esbuild.js",
     "bundle:watch": "node esbuild.js --watch",
     "package": "node esbuild.js --production",
+    "vscode:package": "vsce package --no-rewrite-relative-links",
     "test": "mocha",
     "test:unit": "mocha"
   },
@@ -210,6 +211,7 @@
     "@types/mocha": "^10.0.7",
     "@types/node": "^20.14.9",
     "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^4.0.0",
     "esbuild": "^0.23.0",
     "mocha": "^10.7.3",
     "ts-node": "^10.9.2",

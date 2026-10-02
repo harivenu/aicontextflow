@@ -133,7 +133,7 @@ Every feature sub-context generated via `aicontextflow.createFeature` includes s
 
 ```bash
 # Clone repository
-git clone https://github.com/aicontextflow/aicontextflow.git
+git clone https://github.com/harivenu/aicontextflow.git
 cd aicontextflow
 
 # Install dependencies
