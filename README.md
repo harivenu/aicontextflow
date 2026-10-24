@@ -156,3 +156,9 @@ Press `F5` in VS Code to launch the Extension Development Host for interactive d
 ## 📄 License
 
 MIT License. See [LICENSE](LICENSE) for details.
+
+<a href="https://github.com/harivenu/aicontextflow/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=harivenu/aicontextflow" />
+</a>
+
+Made with [contrib.rocks](https://contrib.rocks).
